@@ -134,16 +134,18 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
 .cat-Car-Expenses{background:rgba(107,114,128,0.12);color:#9CA3AF}
 .cat-Fuel{background:rgba(156,163,175,0.1);color:#9CA3AF}
 .cat-Gifts{background:rgba(110,231,183,0.1);color:#6EE7B7}
+.cat-Groceries{background:rgba(52,211,153,0.12);color:#34D399}
 .cat-Gym{background:rgba(200,255,95,0.1);color:#BBFF4A}
 .cat-Health-Self-care{background:rgba(52,211,153,0.12);color:#34D399}
 .cat-Leisure{background:rgba(200,255,95,0.08);color:#A8D940}
-.cat-Others{background:rgba(255,255,255,0.05);color:#6B7280}
+.cat-Parking{background:rgba(156,163,175,0.1);color:#9CA3AF}
 .cat-Personal{background:rgba(255,255,255,0.07);color:#D1D5DB}
 .cat-Restaurants{background:rgba(200,255,95,0.12);color:#C8FF5F}
 .cat-Shopping{background:rgba(167,243,208,0.12);color:#A7F3D0}
 .cat-Subscriptions{background:rgba(156,163,175,0.08);color:#6B7280}
 .cat-Tennis{background:rgba(110,231,183,0.12);color:#6EE7B7}
 .cat-Therapy{background:rgba(229,231,235,0.07);color:#9CA3AF}
+.cat-Others{background:rgba(255,255,255,0.05);color:#6B7280}
 
 .empty-state{text-align:center;padding:36px;color:var(--text-dim);font-size:0.9rem}
 .empty-icon{font-size:2rem;margin-bottom:8px}
@@ -193,16 +195,18 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
           <option>Car Expenses</option>
           <option>Fuel</option>
           <option>Gifts</option>
+          <option>Groceries</option>
           <option>Gym</option>
           <option>Health/Self-care</option>
           <option>Leisure</option>
-          <option>Others</option>
+          <option>Parking</option>
           <option>Personal</option>
           <option>Restaurants</option>
           <option>Shopping</option>
           <option>Subscriptions</option>
           <option>Tennis</option>
           <option>Therapy</option>
+          <option>Others</option>
         </select>
       </div>
       <div class="form-group" style="max-width:170px">
@@ -264,21 +268,24 @@ let viewDate = new Date();
 let allExpenses = [];
 let doughnutChart = null, barChart = null;
 
+// Solid colors for pie chart — same palette, fully opaque
 const CAT_COLORS = {
-  'Bars':'#6EE7B7',
-  'Car Expenses':'#9CA3AF',
-  'Fuel':'#9CA3AF',
-  'Gifts':'#6EE7B7',
-  'Gym':'#BBFF4A',
-  'Health/Self-care':'#34D399',
-  'Leisure':'#A8D940',
-  'Others':'#6B7280',
-  'Personal':'#D1D5DB',
-  'Restaurants':'#C8FF5F',
-  'Shopping':'#A7F3D0',
-  'Subscriptions':'#6B7280',
-  'Tennis':'#6EE7B7',
-  'Therapy':'#9CA3AF'
+  'Bars':           '#6EE7B7',
+  'Car Expenses':   '#9CA3AF',
+  'Fuel':           '#A8A29E',
+  'Gifts':          '#86EFAC',
+  'Groceries':      '#34D399',
+  'Gym':            '#BBFF4A',
+  'Health/Self-care':'#2DD4BF',
+  'Leisure':        '#A8D940',
+  'Parking':        '#D1D5DB',
+  'Personal':       '#E5E7EB',
+  'Restaurants':    '#C8FF5F',
+  'Shopping':       '#A7F3D0',
+  'Subscriptions':  '#6B7280',
+  'Tennis':         '#6EE7B7',
+  'Therapy':        '#9CA3AF',
+  'Others':         '#4B5563'
 };
 
 function catClass(cat){return 'cat-'+cat.replace(/[\/\s]/g,'-')}
@@ -386,16 +393,31 @@ function renderCharts(expenses){
   expenses.forEach(e=>{catTotals[e.category]=(catTotals[e.category]||0)+e.amount});
   const labels=Object.keys(catTotals);
   const values=labels.map(l=>catTotals[l]);
+  // solid colors — no transparency
   const colors=labels.map(l=>CAT_COLORS[l]||'#6B7280');
 
   if(doughnutChart)doughnutChart.destroy();
   doughnutChart=new Chart(document.getElementById('doughnutChart'),{
     type:'doughnut',
-    data:{labels,datasets:[{data:values,backgroundColor:colors.map(c=>c+'22'),borderColor:colors,borderWidth:2,hoverOffset:6}]},
+    data:{labels,datasets:[{
+      data:values,
+      backgroundColor:colors,
+      borderColor:'#111318',
+      borderWidth:2,
+      hoverOffset:6
+    }]},
     options:{
       responsive:true,maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{color:'rgba(255,255,255,0.4)',font:{family:'Outfit',size:10},padding:10,boxWidth:8,usePointStyle:true,pointStyle:'circle'}},
+        legend:{
+          position:'bottom',
+          labels:{
+            color:'rgba(255,255,255,0.5)',
+            font:{family:'Outfit',size:10},
+            padding:10,boxWidth:8,
+            usePointStyle:true,pointStyle:'circle'
+          }
+        },
         tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmtAmt(ctx.parsed)}`}}
       },
       animation:{animateScale:true,duration:600}
