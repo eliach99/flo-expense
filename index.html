@@ -129,26 +129,24 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
 .col-amt{font-size:0.85rem;font-weight:600;color:var(--text);min-width:62px;text-align:right;flex-shrink:0}
 .cat-badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:0.67rem;font-weight:500}
 
-.cat-Restaurants{background:rgba(200,255,95,0.12);color:#C8FF5F}
+/* CATEGORY BADGE COLORS */
 .cat-Bars{background:rgba(110,231,183,0.12);color:#6EE7B7}
-.cat-Fuel{background:rgba(156,163,175,0.1);color:#9CA3AF}
-.cat-Personal{background:rgba(255,255,255,0.07);color:#D1D5DB}
-.cat-Shopping{background:rgba(167,243,208,0.12);color:#A7F3D0}
 .cat-Car-Expenses{background:rgba(107,114,128,0.12);color:#9CA3AF}
-.cat-Gym{background:rgba(200,255,95,0.1);color:#BBFF4A}
-.cat-Therapy{background:rgba(229,231,235,0.07);color:#9CA3AF}
+.cat-Fuel{background:rgba(156,163,175,0.1);color:#9CA3AF}
 .cat-Gifts{background:rgba(110,231,183,0.1);color:#6EE7B7}
-.cat-Leisure{background:rgba(200,255,95,0.08);color:#A8D940}
-.cat-Subscriptions{background:rgba(156,163,175,0.08);color:#6B7280}
+.cat-Gym{background:rgba(200,255,95,0.1);color:#BBFF4A}
 .cat-Health-Self-care{background:rgba(52,211,153,0.12);color:#34D399}
+.cat-Leisure{background:rgba(200,255,95,0.08);color:#A8D940}
 .cat-Others{background:rgba(255,255,255,0.05);color:#6B7280}
+.cat-Personal{background:rgba(255,255,255,0.07);color:#D1D5DB}
+.cat-Restaurants{background:rgba(200,255,95,0.12);color:#C8FF5F}
+.cat-Shopping{background:rgba(167,243,208,0.12);color:#A7F3D0}
+.cat-Subscriptions{background:rgba(156,163,175,0.08);color:#6B7280}
+.cat-Tennis{background:rgba(110,231,183,0.12);color:#6EE7B7}
+.cat-Therapy{background:rgba(229,231,235,0.07);color:#9CA3AF}
 
 .empty-state{text-align:center;padding:36px;color:var(--text-dim);font-size:0.9rem}
 .empty-icon{font-size:2rem;margin-bottom:8px}
-
-/* SKELETON LOADER */
-.skeleton{background:rgba(255,255,255,0.05);border-radius:8px;animation:pulse 1.4s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 
 #toast{position:fixed;bottom:24px;right:24px;padding:11px 18px;border-radius:10px;font-size:0.85rem;font-family:'Outfit',sans-serif;z-index:9999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
 #toast.show{opacity:1;transform:translateY(0)}
@@ -191,11 +189,20 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
         <div class="form-label">Category</div>
         <select id="categoryInput">
           <option value="">Select category</option>
-          <option>Restaurants</option><option>Bars</option><option>Fuel</option>
-          <option>Personal</option><option>Shopping</option><option>Car Expenses</option>
-          <option>Gym</option><option>Therapy</option><option>Gifts</option>
-          <option>Leisure</option><option>Subscriptions</option><option>Health/Self-care</option>
+          <option>Bars</option>
+          <option>Car Expenses</option>
+          <option>Fuel</option>
+          <option>Gifts</option>
+          <option>Gym</option>
+          <option>Health/Self-care</option>
+          <option>Leisure</option>
           <option>Others</option>
+          <option>Personal</option>
+          <option>Restaurants</option>
+          <option>Shopping</option>
+          <option>Subscriptions</option>
+          <option>Tennis</option>
+          <option>Therapy</option>
         </select>
       </div>
       <div class="form-group" style="max-width:170px">
@@ -235,12 +242,10 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
 
 <div id="toast"></div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── FIREBASE CONFIG ───────────────────────────────────
 const firebaseConfig = {
   apiKey: "AIzaSyDNxflCWz-D6J2CJHnqn2ZT3TKRdHWJGCQ",
   authDomain: "flo-expense.firebaseapp.com",
@@ -255,19 +260,27 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const expensesCol = collection(db, "expenses");
 
-// ── STATE ─────────────────────────────────────────────
 let viewDate = new Date();
 let allExpenses = [];
 let doughnutChart = null, barChart = null;
 
 const CAT_COLORS = {
-  'Restaurants':'#C8FF5F','Bars':'#6EE7B7','Fuel':'#9CA3AF',
-  'Personal':'#D1D5DB','Shopping':'#A7F3D0','Car Expenses':'#9CA3AF',
-  'Gym':'#BBFF4A','Therapy':'#9CA3AF','Gifts':'#6EE7B7',
-  'Leisure':'#A8D940','Subscriptions':'#6B7280','Health/Self-care':'#34D399','Others':'#6B7280'
+  'Bars':'#6EE7B7',
+  'Car Expenses':'#9CA3AF',
+  'Fuel':'#9CA3AF',
+  'Gifts':'#6EE7B7',
+  'Gym':'#BBFF4A',
+  'Health/Self-care':'#34D399',
+  'Leisure':'#A8D940',
+  'Others':'#6B7280',
+  'Personal':'#D1D5DB',
+  'Restaurants':'#C8FF5F',
+  'Shopping':'#A7F3D0',
+  'Subscriptions':'#6B7280',
+  'Tennis':'#6EE7B7',
+  'Therapy':'#9CA3AF'
 };
 
-// ── HELPERS ───────────────────────────────────────────
 function catClass(cat){return 'cat-'+cat.replace(/[\/\s]/g,'-')}
 function monthKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
 function fmtAmt(n){return '$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
@@ -285,7 +298,6 @@ function toast(msg,type='ok'){
   setTimeout(()=>t.classList.remove('show'),2200);
 }
 
-// ── MONTH NAV ─────────────────────────────────────────
 function updateMonthLabel(){
   document.getElementById('monthLabel').textContent=viewDate.toLocaleDateString('en-US',{month:'long',year:'numeric'});
   const now=new Date();
@@ -303,7 +315,6 @@ document.getElementById('nextMonth').onclick=()=>{
   updateMonthLabel();render();
 };
 
-// ── ADD EXPENSE ───────────────────────────────────────
 document.getElementById('dateInput').value=new Date().toISOString().split('T')[0];
 document.getElementById('addBtn').onclick=async()=>{
   const amt=parseFloat(document.getElementById('amountInput').value);
@@ -312,10 +323,8 @@ document.getElementById('addBtn').onclick=async()=>{
   if(!amt||amt<=0){toast('Enter a valid amount','err');return;}
   if(!cat){toast('Pick a category','err');return;}
   if(!date){toast('Pick a date','err');return;}
-
   const btn=document.getElementById('addBtn');
   btn.textContent='...';btn.disabled=true;
-
   try{
     await addDoc(expensesCol,{amount:amt,category:cat,date,createdAt:Date.now()});
     document.getElementById('amountInput').value='';
@@ -325,13 +334,10 @@ document.getElementById('addBtn').onclick=async()=>{
     viewDate=new Date(parseInt(y),parseInt(m)-1,1);
     updateMonthLabel();
     toast('Added! 💸');
-  }catch(e){
-    toast('Failed to save','err');console.error(e);
-  }
+  }catch(e){toast('Failed to save','err');console.error(e);}
   btn.textContent='Add';btn.disabled=false;
 };
 
-// ── REAL-TIME LISTENER ────────────────────────────────
 showSync('Connecting...','loading');
 const q=query(expensesCol,orderBy('createdAt','desc'));
 onSnapshot(q,(snapshot)=>{
@@ -343,7 +349,6 @@ onSnapshot(q,(snapshot)=>{
   showSync('Sync error','err');
 });
 
-// ── RENDER ────────────────────────────────────────────
 function getMonthExpenses(){
   const mk=monthKey(viewDate);
   return allExpenses.filter(e=>e.date&&e.date.startsWith(mk)).sort((a,b)=>b.date.localeCompare(a.date));
@@ -492,13 +497,10 @@ async function triggerDelete(id,wrap,row){
     try{
       await deleteDoc(doc(db,'expenses',id));
       toast('Deleted','err');
-    }catch(e){
-      toast('Delete failed','err');console.error(e);
-    }
+    }catch(e){toast('Delete failed','err');console.error(e);}
   },290);
 }
 
-// ── PDF EXPORT ────────────────────────────────────────
 document.getElementById('exportBtn').onclick=async()=>{
   const btn=document.getElementById('exportBtn');
   btn.textContent='⏳ Generating...';btn.disabled=true;
@@ -540,9 +542,7 @@ document.getElementById('exportBtn').onclick=async()=>{
   btn.textContent='📄 Export PDF';btn.disabled=false;
 };
 
-// ── INIT ──────────────────────────────────────────────
 updateMonthLabel();
-
 </script>
 </body>
 </html>
