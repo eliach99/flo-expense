@@ -41,7 +41,6 @@ body::before{
 .container{max-width:1100px;margin:0 auto;padding:28px 20px;position:relative;z-index:1}
 .glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);backdrop-filter:blur(12px)}
 
-/* SYNC STATUS */
 #syncStatus{
   position:fixed;top:16px;left:50%;transform:translateX(-50%);
   font-family:'Outfit',sans-serif;font-size:0.75rem;font-weight:500;
@@ -54,7 +53,6 @@ body::before{
 #syncStatus.err{background:rgba(217,108,108,0.12);border-color:rgba(217,108,108,0.25);color:#D96C6C}
 #syncStatus.loading{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:#9CA3AF}
 
-/* HEADER */
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .logo{font-size:1.4rem;font-weight:700;letter-spacing:-0.5px;color:var(--text)}
 .logo span{color:var(--accent)}
@@ -69,7 +67,6 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .btn-ghost{background:var(--surface);border:1px solid var(--border);color:var(--text-muted)}
 .btn-ghost:hover{background:rgba(255,255,255,0.07)}
 
-/* ADD FORM */
 .add-panel{padding:18px 22px;margin-bottom:16px}
 .form-label{font-size:0.63rem;font-weight:500;letter-spacing:0.7px;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px}
 .form-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
@@ -85,7 +82,6 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 input[type=number]::-webkit-inner-spin-button{opacity:.4}
 input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:pointer}
 
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
 .stat-card{padding:16px 18px;transition:transform .2s}
 .stat-card:hover{transform:translateY(-2px)}
@@ -94,20 +90,17 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
 .stat-val.accent{color:var(--accent)}
 .stat-sub{font-size:0.7rem;color:var(--text-dimmer);margin-top:3px}
 
-/* CHARTS */
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 @media(max-width:640px){.charts-row{grid-template-columns:1fr}}
 .chart-card{padding:18px 20px;display:flex;flex-direction:column}
 .chart-lbl{font-size:0.62rem;font-weight:500;letter-spacing:0.6px;text-transform:uppercase;color:var(--text-dim);margin-bottom:14px}
 .chart-wrap{flex:1;position:relative;min-height:190px}
 
-/* TABLE */
 .table-card{padding:18px 20px}
 .table-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .table-title{font-size:0.62rem;font-weight:500;letter-spacing:0.6px;text-transform:uppercase;color:var(--text-dim)}
 .hint-text{font-size:0.68rem;color:var(--text-dimmer)}
 
-/* SWIPE ROW */
 .swipe-list{display:flex;flex-direction:column;gap:2px}
 .swipe-container{position:relative;border-radius:10px;overflow:hidden;height:46px;margin-bottom:2px;transition:height .25s ease,margin .25s ease}
 .delete-bg{
@@ -129,18 +122,20 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
 .col-amt{font-size:0.85rem;font-weight:600;color:var(--text);min-width:62px;text-align:right;flex-shrink:0}
 .cat-badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:0.67rem;font-weight:500}
 
-/* CATEGORY BADGE COLORS */
 .cat-Bars{background:rgba(110,231,183,0.12);color:#6EE7B7}
 .cat-Car-Expenses{background:rgba(107,114,128,0.12);color:#9CA3AF}
+.cat-Car-Payments{background:rgba(156,163,175,0.12);color:#CBD5E1}
 .cat-Fuel{background:rgba(156,163,175,0.1);color:#9CA3AF}
 .cat-Gifts{background:rgba(110,231,183,0.1);color:#6EE7B7}
 .cat-Groceries{background:rgba(52,211,153,0.12);color:#34D399}
 .cat-Gym{background:rgba(200,255,95,0.1);color:#BBFF4A}
-.cat-Health-Self-care{background:rgba(52,211,153,0.12);color:#34D399}
+.cat-Health-Self-care{background:rgba(45,212,191,0.12);color:#2DD4BF}
+.cat-Investments{background:rgba(200,255,95,0.15);color:#C8FF5F}
 .cat-Leisure{background:rgba(200,255,95,0.08);color:#A8D940}
-.cat-Parking{background:rgba(156,163,175,0.1);color:#9CA3AF}
-.cat-Personal{background:rgba(255,255,255,0.07);color:#D1D5DB}
+.cat-Parking{background:rgba(156,163,175,0.1);color:#D1D5DB}
+.cat-Personal{background:rgba(255,255,255,0.07);color:#E5E7EB}
 .cat-Restaurants{background:rgba(200,255,95,0.12);color:#C8FF5F}
+.cat-Savings{background:rgba(52,211,153,0.15);color:#6EE7B7}
 .cat-Shopping{background:rgba(167,243,208,0.12);color:#A7F3D0}
 .cat-Subscriptions{background:rgba(156,163,175,0.08);color:#6B7280}
 .cat-Tennis{background:rgba(110,231,183,0.12);color:#6EE7B7}
@@ -193,15 +188,18 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:po
           <option value="">Select category</option>
           <option>Bars</option>
           <option>Car Expenses</option>
+          <option>Car Payments</option>
           <option>Fuel</option>
           <option>Gifts</option>
           <option>Groceries</option>
           <option>Gym</option>
           <option>Health/Self-care</option>
+          <option>Investments</option>
           <option>Leisure</option>
           <option>Parking</option>
           <option>Personal</option>
           <option>Restaurants</option>
+          <option>Savings</option>
           <option>Shopping</option>
           <option>Subscriptions</option>
           <option>Tennis</option>
@@ -268,24 +266,26 @@ let viewDate = new Date();
 let allExpenses = [];
 let doughnutChart = null, barChart = null;
 
-// Solid colors for pie chart — same palette, fully opaque
 const CAT_COLORS = {
-  'Bars':           '#6EE7B7',
-  'Car Expenses':   '#9CA3AF',
-  'Fuel':           '#A8A29E',
-  'Gifts':          '#86EFAC',
-  'Groceries':      '#34D399',
-  'Gym':            '#BBFF4A',
-  'Health/Self-care':'#2DD4BF',
-  'Leisure':        '#A8D940',
-  'Parking':        '#D1D5DB',
-  'Personal':       '#E5E7EB',
-  'Restaurants':    '#C8FF5F',
-  'Shopping':       '#A7F3D0',
-  'Subscriptions':  '#6B7280',
-  'Tennis':         '#6EE7B7',
-  'Therapy':        '#9CA3AF',
-  'Others':         '#4B5563'
+  'Bars':             '#6EE7B7',
+  'Car Expenses':     '#9CA3AF',
+  'Car Payments':     '#CBD5E1',
+  'Fuel':             '#A8A29E',
+  'Gifts':            '#86EFAC',
+  'Groceries':        '#34D399',
+  'Gym':              '#BBFF4A',
+  'Health/Self-care': '#2DD4BF',
+  'Investments':      '#C8FF5F',
+  'Leisure':          '#A8D940',
+  'Parking':          '#D1D5DB',
+  'Personal':         '#E5E7EB',
+  'Restaurants':      '#C8FF5F',
+  'Savings':          '#6EE7B7',
+  'Shopping':         '#A7F3D0',
+  'Subscriptions':    '#6B7280',
+  'Tennis':           '#86EFAC',
+  'Therapy':          '#9CA3AF',
+  'Others':           '#4B5563'
 };
 
 function catClass(cat){return 'cat-'+cat.replace(/[\/\s]/g,'-')}
@@ -393,7 +393,6 @@ function renderCharts(expenses){
   expenses.forEach(e=>{catTotals[e.category]=(catTotals[e.category]||0)+e.amount});
   const labels=Object.keys(catTotals);
   const values=labels.map(l=>catTotals[l]);
-  // solid colors — no transparency
   const colors=labels.map(l=>CAT_COLORS[l]||'#6B7280');
 
   if(doughnutChart)doughnutChart.destroy();
@@ -411,12 +410,7 @@ function renderCharts(expenses){
       plugins:{
         legend:{
           position:'bottom',
-          labels:{
-            color:'rgba(255,255,255,0.5)',
-            font:{family:'Outfit',size:10},
-            padding:10,boxWidth:8,
-            usePointStyle:true,pointStyle:'circle'
-          }
+          labels:{color:'rgba(255,255,255,0.5)',font:{family:'Outfit',size:10},padding:10,boxWidth:8,usePointStyle:true,pointStyle:'circle'}
         },
         tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${fmtAmt(ctx.parsed)}`}}
       },
